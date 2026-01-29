@@ -24,7 +24,7 @@ Wenn dein Repo z.B. `https://<user>.github.io/<repo>/` heißt, dann existieren d
 ## Struktur
 
 - `index.html` = Stufe 1
-- `seite-2/index.html` … `seite-5/index.html` = Stufen 2–5
+- `group2/index.html` … `group5/index.html` = Stufen 2–5
 - `assets/styles.css` und `assets/game.js` werden von allen Seiten genutzt
 
 Hinweis: Alle Links sind **relativ**, damit es sowohl lokal als auch unter `/<repo>/` auf GitHub Pages funktioniert.

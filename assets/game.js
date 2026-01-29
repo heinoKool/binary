@@ -34,6 +34,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('main-container')
     const executeBtn = document.getElementById('execute-btn')
 
+    // Help UI: button + decimal weights above toggles
+    if (container) {
+        ensureBitValueLabels()
+        ensureHelpButton(container, executeBtn)
+    }
+
     if (!Number.isFinite(targetValue)) {
         if (displayNumber) displayNumber.innerText = '—'
         return
@@ -59,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             container?.classList.remove('access-denied')
             // Force reflow to restart animation
-            // eslint-disable-next-line no-unused-expressions
             container && void container.offsetWidth
             container?.classList.add('access-denied')
         }
@@ -67,3 +72,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
     executeBtn?.addEventListener('click', checkCode)
 })
+
+function ensureBitValueLabels() {
+    const switchUnits = document.querySelectorAll('.switch-unit')
+    switchUnits.forEach(unit => {
+        if (unit.querySelector('.bit-value')) return
+
+        const input = unit.querySelector('input.switch-input')
+        if (!input) return
+
+        const label = unit.querySelector('label.switch-label')
+        const value = input.getAttribute('value')
+        if (!value) return
+
+        const valueEl = document.createElement('span')
+        valueEl.className = 'bit-value'
+        valueEl.textContent = value
+
+        if (label) {
+            unit.insertBefore(valueEl, label)
+        } else {
+            unit.appendChild(valueEl)
+        }
+    })
+}
+
+function ensureHelpButton(container, executeBtn) {
+    if (container.querySelector('.help-btn')) return
+
+    const helpBtn = document.createElement('button')
+    helpBtn.type = 'button'
+    helpBtn.className = 'help-btn'
+    helpBtn.setAttribute('aria-pressed', 'false')
+    helpBtn.textContent = 'HILFE'
+
+    function syncHelpState() {
+        const isOn = container.classList.contains('show-help')
+        helpBtn.setAttribute('aria-pressed', String(isOn))
+        helpBtn.textContent = isOn ? 'HILFE AUS' : 'HILFE'
+    }
+
+    helpBtn.addEventListener('click', () => {
+        container.classList.toggle('show-help')
+        syncHelpState()
+    })
+
+    // Always place in the top-right corner of the viewport
+    document.body.appendChild(helpBtn)
+
+    syncHelpState()
+}
