@@ -314,7 +314,11 @@ h1 {
 }
 
 .switch-input {
-    display: none;
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 1px;
+    height: 1px;
 }
 
 /* Vertikale Toggle (Pillen) */
@@ -362,13 +366,13 @@ h1 {
     transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
-.switch-input:checked + .switch-label {
+.switch-input:checked ~ .switch-label {
     background: rgba(0, 210, 255, 0.2);
     border-color: var(--neon-blue);
     box-shadow: 0 0 10px rgba(0, 210, 255, 0.2), inset 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-.switch-input:checked + .switch-label::after {
+.switch-input:checked ~ .switch-label::after {
     transform: translateY(-26px);
     background: var(--neon-blue);
     box-shadow: 0 0 10px var(--neon-blue);
@@ -471,12 +475,12 @@ h1 {
     opacity: 0;
 }
 
-.container.access-granted .switch-input:checked + .switch-label {
+.container.access-granted .switch-input:checked ~ .switch-label {
     border-color: var(--neon-green);
     background: rgba(0, 255, 136, 0.2);
 }
 
-.container.access-granted .switch-input:checked + .switch-label::after {
+.container.access-granted .switch-input:checked ~ .switch-label::after {
     background: var(--neon-green);
     box-shadow: 0 0 15px var(--neon-green);
 }
